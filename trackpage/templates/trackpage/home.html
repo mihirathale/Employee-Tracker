@@ -1,0 +1,122 @@
+{% extends "trackpage/header.html" %}
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}  
+{% block nav %}
+
+<div class="navbar navbar-dark bg-dark navbar-expand-md sticky-top">
+    
+        <a class="navbar-brand" href="/">Employee Tracker</a>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">    
+            </ul>
+        </div>
+    
+</div>
+{% endblock%}
+
+{% block content %}
+<style>
+    select{
+       
+        margin-left: 20.5px;
+        margin-top:  80px;
+        width: 150px;
+        height: 20px;
+        font-size: 13px;
+    }
+    section {
+    display: -webkit-flex;
+    display: flex;
+}
+    button{
+        position:sticky;
+        width: auto;
+        height: 30px;
+        left: 170px;
+        margin-top: 70px;
+        background-color: dimgray;
+        text-align: center;
+        display: inline-block;
+        color: white;
+        font-size: 12px;
+        }
+    .datepicker{
+        margin-top: -30px;
+        margin-left: 30px;
+         width: 150px;
+        font-size: 13px;
+        height: 20px;
+        
+        
+    }
+    
+</style>
+<section>
+<form  method="post">
+  {% csrf_token %}
+  {{ form.as_p}}
+    <label for="datepicker">Date:</label>
+    <input type="date" id="datepicker" class="datepicker" name="date" text="date" >
+  <button type="submit" on>Submit</button>
+    
+</form>
+    
+   
+</section>
+<label for="emp">Selected Employee : </label>
+<td id='emp' style="margin-top: 40px; margin-left: 50px">{{nam}}</td>
+<label for="dat">Selected Date : </label>
+
+<td id='dat' style="margin-top: 20px; margin-left: 50px">{{dat}}</td>
+
+
+    {% endblock %}
+
+
+{% block map %}
+<div class="fluid-container" style="margin-left: 10px;margin-right: 10px;margin-bottom: 10px;margin-top: 10px; height: 96%;background-color:black;position:relative;display: flex "> 
+<div id="map" style="width:100%;height:100%;">  
+     {% load json_filters %}
+    <script>function myMap() {
+            
+ var myLatLng = {lat:22.7196,lng:75.8577};
+var geocoder = new google.maps.Geocoder;
+        var infowindow = new google.maps.InfoWindow;
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 12,
+    center: myLatLng
+  });
+            
+    locs =[]
+      
+    {% for i in loc %}
+    
+  marker = new google.maps.Marker({
+    position: new google.maps.LatLng({lat:{{i.0|jsonify}},lng: {{i.1|jsonify}}}),
+    map: map,
+      title : "{{i.2|safe}}\n{{i.3|safe}}",
+   });
+locs.push({lat:{{i.0|jsonify}},lng: {{i.1|jsonify}}});
+     
+{% endfor %} 
+    
+            
+        
+   var flightPath = new google.maps.Polyline({
+          path: locs,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        flightPath.setMap(map);
+}      
+         </script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaXkLscb60mvsAw0OKQkedv1jOh8rKrKE&callback=myMap"></script>
+            
+ </div>
+{% endblock %}

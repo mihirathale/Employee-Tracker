@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <title>Employee Tracker</title>
+    <meta charset="utf-8"/>
+    {% load staticfiles %}
+     {% load json_filters %}
+    <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %} type="text/css" media="screen">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/media/js/core.js"></script>
+
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}  
+{{ form.media }} 
+<style>
+    body{
+    min-width:800px;
+    width: auto !important;
+    width:800px;
+}
+.navbar{position:sticky;
+        text-align: left;
+        background-blend-mode: color-burn;}        
+    
+.navbar-brand{margin-left: 20px;
+                font-size: 23px;}    
+.footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: black;
+        color: white;
+        text-align: center;
+        }
+
+</style>
+</head>
+  
+<body id="body" style="height: 100%;" class="body" >
+    {% block nav %}
+    {% endblock %}
+    
+    <div class="fluid-container" style="background-color: black;width: 100%;height: 580px;margin-left: 0px; overflow:auto;background-size: 100%">
+<div style="float: left;width: 20%;height: 100%;margin-top: 10px; background-color: gray;" >  
+
+
+    {% block content %}    
+    {% endblock %}
+    </div>
+        <div style="float:right; width: 80%;background-color: black;height:100%; ">
+            {% block map %}
+            {% endblock %}
+ </div>
+ </div>
+ <div class="footer">
+ <p>Osswal Infosystems Pvt. Ltd.</p>
+</div>
+</body>    
+</html> 
